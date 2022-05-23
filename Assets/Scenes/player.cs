@@ -17,30 +17,24 @@ public class player : MonoBehaviour
     public float rotationcameraX;
     public float rotationcameraY;
     public float rotationplayerY;
-    public float gravity = 9.8f;
+    
 
     [Header("Salto Del personaje")]
     public float JumpHeight;
-    
-   
+    public Vector3 movimientoY;
+    public float gravity = -9.8f;
+
     private void Update()
     {
 
-      //movimiento del personaje 
-        direccion.x = Input.GetAxis("Horizontal");
-        direccion.z = Input.GetAxis("Vertical");
-        direccion.y += gravity * Time.deltaTime;
+      
+        
 
-        if (controller.isGrounded && direccion.y >0)
-        {
-            direccion.y = -2f;
-        }
+       
+       
+       
 
-        direccion = transform.TransformDirection(direccion);
-        controller.Move(direccion * Time.deltaTime * speedMovement);
-
-        rotationcameraX -= MouseMovement.y;
-        rotationplayerY += MouseMovement.x;
+        
        
 
         /* if (rotationcameraX > 40 )
@@ -52,23 +46,59 @@ public class player : MonoBehaviour
         {
             rotationcameraX = -40; 
         }*/
-
         
-        //Rotacion limmitada
-        rotationcameraX = Mathf.Clamp(rotationcameraX, -40, 40);
-
-        //Rotacion
+        
+        
+        //Rotacion del mouse
         MouseMovement.x = Input.GetAxis("Mouse X");
         MouseMovement.y = Input.GetAxis("Mouse Y");
+
+        //movimiento del personaje 
+        direccion.x = Input.GetAxis("Horizontal");
+        direccion.z = Input.GetAxis("Vertical");
+ 
+        //transformar la direccion de coordenadas del jugador
+        direccion = transform.TransformDirection(direccion);
+        
+        //velocidad del movimiento
+        controller.Move(direccion * Time.deltaTime * speedMovement);
+        
+        //movimiento de la camara
+        rotationcameraX -= MouseMovement.y;
+        rotationplayerY += MouseMovement.x;
+       
+        
+         //Rotacion limitada
+        rotationcameraX = Mathf.Clamp(rotationcameraX, -40, 40);
+        
+        //rotar la camara del personaje en base a el movimiento acumulado
         playerCamera.transform.localRotation = Quaternion.Euler(rotationcameraX,0, 0);
+        
+        //rotar el pesonaje en base al movimiento acumulado
         controller.transform.rotation = Quaternion.Euler(0, rotationplayerY, 0);
 
-            
+        //calcular gravedad de salto
+        movimientoY.y += gravity * 1.5f  * Time.deltaTime;
+       
+        //salto
+        controller.Move(movimientoY * Time.deltaTime);
+
+        if (controller.isGrounded && movimientoY.y < 0)
+        {
+            movimientoY.y = -2f;
+        } 
+
+        //salto condicional   
         if (controller.isGrounded && Input.GetButtonDown("Jump"))
         {
-            direccion.y = Mathf.Sqrt(JumpHeight * -2f * gravity);
-        }        
-            
+            direccion.y = Mathf.Sqrt(JumpHeight * -2 * gravity);
+        }
+
+       
+        
+        
+        
+        
         
         
         
