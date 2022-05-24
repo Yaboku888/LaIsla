@@ -24,19 +24,10 @@ public class player : MonoBehaviour
     public Vector3 movimientoY;
     public float gravity = -9.8f;
 
+    int jumpCount;
+
     private void Update()
     {
-
-      
-        
-
-       
-       
-       
-
-        
-       
-
         /* if (rotationcameraX > 40 )
         {
             rotationcameraX = 40;
@@ -46,9 +37,7 @@ public class player : MonoBehaviour
         {
             rotationcameraX = -40; 
         }*/
-        
-        
-        
+   
         //Rotacion del mouse
         MouseMovement.x = Input.GetAxis("Mouse X");
         MouseMovement.y = Input.GetAxis("Mouse Y");
@@ -89,8 +78,10 @@ public class player : MonoBehaviour
         } 
 
         //salto condicional   
-        if (controller.isGrounded && Input.GetButtonDown("Jump"))
+       
+        if (controller.isGrounded && Input.GetButtonDown("Jump") && jumpCount == 0)
         {
+            jumpCount++;
             direccion.y = Mathf.Sqrt(JumpHeight * -2 * gravity);
         }
 
