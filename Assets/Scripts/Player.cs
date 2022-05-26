@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [Header("movimiento de personaje")]
     public float speedMovement;
@@ -24,7 +24,7 @@ public class player : MonoBehaviour
     public Vector3 movimientoY;
     public float gravity = -9.8f;
 
-    int jumpCount;
+   
 
     private void Update()
     {
@@ -38,7 +38,7 @@ public class player : MonoBehaviour
             rotationcameraX = -40; 
         }*/
    
-        //Rotacion del mouse
+        //movmiento del mouse
         MouseMovement.x = Input.GetAxis("Mouse X");
         MouseMovement.y = Input.GetAxis("Mouse Y");
 
@@ -66,26 +66,31 @@ public class player : MonoBehaviour
         //rotar el pesonaje en base al movimiento acumulado
         controller.transform.rotation = Quaternion.Euler(0, rotationplayerY, 0);
 
-        //calcular gravedad de salto
-        movimientoY.y += gravity * 1.5f  * Time.deltaTime;
+        //calcular gravedad de frame
+        movimientoY.y += gravity *2f * Time.deltaTime;
        
-        //salto
+       //mover el personaje en "Y" en base a la gravedad calculada
         controller.Move(movimientoY * Time.deltaTime);
 
+        //si esta tocando el suelo y el movimiento en y es negativo resetear la gravedad
         if (controller.isGrounded && movimientoY.y < 0)
         {
             movimientoY.y = -2f;
-        } 
+        }
 
-        //salto condicional   
-       
-        if (controller.isGrounded && Input.GetButtonDown("Jump") && jumpCount == 0)
+        //si el personaje esta tocando el suelo y al presionar la tecla, calcular el salto del personaje
+
+        if (controller.isGrounded && Input.GetButtonDown("Jump"))
         {
-            jumpCount++;
-            direccion.y = Mathf.Sqrt(JumpHeight * -2 * gravity);
+            
+            movimientoY.y = Mathf.Sqrt(JumpHeight * -2f * gravity);
         }
 
        
+        
+        
+        
+        
         
         
         
