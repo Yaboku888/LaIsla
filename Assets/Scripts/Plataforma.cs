@@ -22,5 +22,6 @@ public class Plataforma : MonoBehaviour
     private void MovePlataform()
     {
         plataforma.transform.Translate(Vector3.up * Time.deltaTime * speedmovent);
+
     }
 }
