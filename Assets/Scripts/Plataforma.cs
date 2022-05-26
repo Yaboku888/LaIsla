@@ -10,14 +10,17 @@ public class Plataforma : MonoBehaviour
     public Transform positionmin;
     public Transform positionmax;
     public float speedmovent;
-    void Start()
+
+    private void OnTriggerStay(Collider other)
     {
-        
+        if (other !=null)
+        {
+            MovePlataform();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void MovePlataform()
     {
-        
+        plataforma.transform.Translate(Vector3.up * Time.deltaTime * speedmovent);
     }
 }
