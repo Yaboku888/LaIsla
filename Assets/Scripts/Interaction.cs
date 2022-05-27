@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
+
     public Playerstadistics playerstadistics;
-    
+    public Transform cameraPlayer;
+
+
+    private void Update()
+    {
+        Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward, Color.blue);
+    }
+
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "puerta" && playerstadistics.batterycount>=3)
@@ -17,9 +28,12 @@ public class Interaction : MonoBehaviour
         {
 
             other.GetComponentInParent<Battery>().desaparecer();
-            Debug.Log("la bateria se recogió");
             playerstadistics.batterycount++;
+
+            Debug.Log("las baterias se recogieron");
         }
+
+
        
 
     }
