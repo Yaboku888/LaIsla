@@ -7,11 +7,23 @@ public class Interaction : MonoBehaviour
 
     public Playerstadistics playerstadistics;
     public Transform cameraPlayer;
-
+    public Transform objetoVacio;
+    public LayerMask lm;
 
     private void Update()
     {
         Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward, Color.blue);
+        RaycastHit hit;
+        
+        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.forward, out hit, 1f, lm))
+        {
+            if (Input.GetButton("PickButton"))
+            {
+                Debug.Log(hit.transform.name);
+                hit.transform.parent = objetoVacio;
+                hit.transform.localPosition = Vector3.zero;
+            }
+        }
     }
 
 
