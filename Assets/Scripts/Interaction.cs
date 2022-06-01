@@ -9,19 +9,28 @@ public class Interaction : MonoBehaviour
     public Transform cameraPlayer;
     public Transform objetoVacio;
     public LayerMask lm;
+    public GameObject OBJETO;
 
     private void Update()
     {
         Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward, Color.blue);
         RaycastHit hit;
         
-        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.forward, out hit, 1f, lm))
+        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.forward,  out hit,2f, lm))
         {
-            if (Input.GetButton("PickButton"))
+            if (Input.GetButtonDown("Agarrar"))
             {
+                OBJETO.GetComponent<Rigidbody>().isKinematic = true;
                 Debug.Log(hit.transform.name);
                 hit.transform.parent = objetoVacio;
                 hit.transform.localPosition = Vector3.zero;
+                
+            }   
+
+            if (Input.GetButtonDown("Soltar"))
+            {
+                OBJETO.GetComponent<Rigidbody>().isKinematic = false;
+                hit.transform.parent = null;
             }
         }
     }
