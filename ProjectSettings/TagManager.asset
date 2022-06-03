@@ -6,6 +6,7 @@ TagManager:
   tags:
   - puerta
   - battery
+  - weapon
   layers:
   - Default
   - TransparentFX
