@@ -9,28 +9,41 @@ public class Interaction : MonoBehaviour
     public Transform cameraPlayer;
     public Transform objetoVacio;
     public LayerMask lm;
-    public GameObject OBJETO;
+   public GameObject OBJETO;
+    public GameObject arma;
+    public Transform weapon;
 
     private void Update()
     {
-        Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward, Color.blue);
+
+        if (objetoVacio.childCount > 0 && Input.GetButtonDown("Agarrar"))
+        {
+            OBJETO.GetComponentInChildren<Rigidbody>().isKinematic = false;
+            objetoVacio.GetChild(0).transform.parent = null;
+           // objetoVacio.GetComponentInChildren<Transform>().parent = null;
+                
+            }
+   
+          
+        Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward * 2, Color.blue);
+       
         RaycastHit hit;
-        
-        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.forward,  out hit,2f, lm))
+        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.transform.forward,  out hit, 2f, lm))
         {
             if (Input.GetButtonDown("Agarrar"))
             {
-                OBJETO.GetComponent<Rigidbody>().isKinematic = true;
-                Debug.Log(hit.transform.name);
+                OBJETO.transform.GetComponent<Rigidbody>().isKinematic = true;
+             
                 hit.transform.parent = objetoVacio;
                 hit.transform.localPosition = Vector3.zero;
-                
-            }   
+                   //Debug.Log(hit.transform.name);
+            }    
+            
+          
 
-            if (Input.GetButtonDown("Soltar"))
+            
             {
-                OBJETO.GetComponent<Rigidbody>().isKinematic = false;
-                hit.transform.parent = null;
+               
             }
         }
     }
@@ -54,7 +67,11 @@ public class Interaction : MonoBehaviour
             Debug.Log("las baterias se recogieron");
         }
 
-
+        if (other.tag == "weapon")
+        {
+            arma.transform.parent = weapon;
+            arma.transform.localPosition = Vector3.zero;              
+        }
        
 
     }
