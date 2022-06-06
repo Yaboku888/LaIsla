@@ -9,7 +9,6 @@ public class Interaction : MonoBehaviour
     public Transform cameraPlayer;
     public Transform objetoVacio;
     public LayerMask lm;
-   public GameObject OBJETO;
     public GameObject arma;
     public Transform weapon;
 
@@ -18,7 +17,7 @@ public class Interaction : MonoBehaviour
 
         if (objetoVacio.childCount > 0 && Input.GetButtonDown("Agarrar"))
         {
-            OBJETO.GetComponentInChildren<Rigidbody>().isKinematic = false;
+            objetoVacio.GetComponentInChildren<Rigidbody>().isKinematic = false;
             objetoVacio.GetChild(0).transform.parent = null;
            // objetoVacio.GetComponentInChildren<Transform>().parent = null;
                 
@@ -32,11 +31,10 @@ public class Interaction : MonoBehaviour
         {
             if (Input.GetButtonDown("Agarrar"))
             {
-                OBJETO.transform.GetComponent<Rigidbody>().isKinematic = true;
-             
-                hit.transform.parent = objetoVacio;
+               hit.transform.GetComponent<Rigidbody>().isKinematic = true;
+               hit.transform.parent = objetoVacio;
                 hit.transform.localPosition = Vector3.zero;
-                   //Debug.Log(hit.transform.name);
+                   Debug.Log(hit.transform.name);
             }    
             
           
@@ -69,6 +67,8 @@ public class Interaction : MonoBehaviour
 
         if (other.tag == "weapon")
         {
+           // other.transform.parent = objetovacioarma;
+
             arma.transform.parent = weapon;
             arma.transform.localPosition = Vector3.zero;              
         }
