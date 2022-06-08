@@ -27,7 +27,7 @@ public class Interaction : MonoBehaviour
         Debug.DrawRay(cameraPlayer.position, cameraPlayer.forward * 2, Color.blue);
        
         RaycastHit hit;
-        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.transform.forward,  out hit, 2f, lm))
+        if (Physics.Raycast(cameraPlayer.position, cameraPlayer.transform.forward,  out hit, 4f, lm))
         {
             if (Input.GetButtonDown("Agarrar"))
             {
@@ -40,9 +40,9 @@ public class Interaction : MonoBehaviour
           
 
             
-            {
+            
                
-            }
+            
         }
     }
 
@@ -70,7 +70,7 @@ public class Interaction : MonoBehaviour
            // other.transform.parent = objetovacioarma;
 
             arma.transform.parent = weapon;
-            arma.transform.localPosition = Vector3.zero;              
+            arma.transform.localRotation = Quaternion.identity;           
         }
        
 
