@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     [Header("movimiento de personaje")]
@@ -11,20 +12,44 @@ public class Player : MonoBehaviour
     public Vector3 direccion;
     public CharacterController controller;
 
-    [Header("Movimiento de la camará")]
+   
+    
+    /* [Header("Movimiento de la camará")]
     public Vector2 MouseMovement;
     public Camera playerCamera;
     public float rotationcameraX;
     public float rotationcameraY;
     public float rotationplayerY;
-    
+    */
 
     [Header("Salto Del personaje")]
     public float JumpHeight;
     public Vector3 movimientoY;
     public float gravity = -9.8f;
+    public float rotationY;
 
-   
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void Move (float Vertical, float Horizontal)
+    {
+        direccion.x = Horizontal;
+        direccion.z = Vertical;
+        direccion = transform.TransformDirection(direccion);
+        controller.Move(direccion * Time.deltaTime * speedMovement);
+
+    }
+    
+    public void Rotation(float RotationValue)
+    {
+        rotationY += RotationValue; 
+        controller.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
+
+
+    }
 
     private void Update()
     {
@@ -39,8 +64,8 @@ public class Player : MonoBehaviour
         }*/
    
         //movmiento del mouse
-        MouseMovement.x = Input.GetAxis("Mouse X");
-        MouseMovement.y = Input.GetAxis("Mouse Y");
+        //MouseMovement.x = Input.GetAxis("Mouse X");
+        //MouseMovement.y = Input.GetAxis("Mouse Y");
 
         //movimiento del personaje 
         direccion.x = Input.GetAxis("Horizontal");
@@ -53,18 +78,18 @@ public class Player : MonoBehaviour
         controller.Move(direccion * Time.deltaTime * speedMovement);
         
         //movimiento de la camara
-        rotationcameraX -= MouseMovement.y;
-        rotationplayerY += MouseMovement.x;
+        //rotationcameraX -= MouseMovement.y;
+        //rotationplayerY += MouseMovement.x;
        
         
          //Rotacion limitada
-        rotationcameraX = Mathf.Clamp(rotationcameraX, -40, 40);
+        //rotationcameraX = Mathf.Clamp(rotationcameraX, -40, 40);
         
         //rotar la camara del personaje en base a el movimiento acumulado
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationcameraX,0, 0);
+        //playerCamera.transform.localRotation = Quaternion.Euler(rotationcameraX,0, 0);
         
         //rotar el pesonaje en base al movimiento acumulado
-        controller.transform.rotation = Quaternion.Euler(0, rotationplayerY, 0);
+        //controller.transform.rotation = Quaternion.Euler(0, rotationplayerY, 0);
 
         //calcular gravedad de frame
         movimientoY.y += gravity *2f * Time.deltaTime;
