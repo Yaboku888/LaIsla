@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
             {
                 if (Vector3.Dot((jugador.position-transform.position).normalized, transform.TransformDirection(Vector3.right).normalized)> 0f)
                 {
-                    movement.Rotation(-10f);
+                    movement.Rotation(1f);
                 }
            
 
@@ -31,12 +31,12 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                movement.Rotation(10f);
+                movement.Rotation(-1f);
             }
+            movement.Move(1, 0);
 
-            
         }
-                movement.Move(1, 0);
+               
     } 
 
 }
